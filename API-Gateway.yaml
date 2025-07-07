@@ -1,47 +1,44 @@
 server:
-  port: 8888
+      port: 8888
+    spring:
+      application:
+        name: API-Gateway
 
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka
+      cloud:
+        gateway:
+          routes:
+            - id: User-service
+              uri: http://user-service:7070
+              predicates:
+                - Path=/user/**
+              filters:
+                - StripPrefix=1
+            - id: Attendance-service
+              uri: http://attendance-service:6060
+              predicates:
+                - Path=/attendance/**
+              filters:
+                - StripPrefix=1
+            - id: Finance-service
+              uri: http://finance-service:8080
+              predicates:
+                - Path=/finance/**
+              filters:
+                - StripPrefix=1
+        discovery:
+          enabled: false
 
-spring:
-  # jmx:
-  #   enabled: false
-  application:
-    name: API-Gateway
-  cloud:
-    config:
-      enabled: false
-    gateway:
-      discovery:
-        locator:
-          enabled: true
-          lowerCaseServiceId: true
-          cache:   # Fixed typo here
-            enabled: false
-      routes:
-        - id: finance-service
-          uri: lb://Finance
-          predicates:
-            - Path=/finance/**
-        - id: User-service
-          uri: lb://User
-          predicates:
-            - Path=/user/**
-        - id: Attendance-service
-          uri: lb://Attendance
-          predicates:
-            - Path=/attendance/**
+    jwt:
+      jwe:
+        key: ${JWE_KEY}
+      jws:
+        key: ${JWS_KEY}
 
-logging:
-  level:
-    org.springframework.cloud.gateway: DEBUG
-jwt:
-  jwe:
-    key: ${JWE_KEY}
-  jws:
-    key: ${JWS_KEY}
+    logging:
+      level:
+        org.springframework.cloud.gateway: TRACE
+        org.springframework.cloud.loadbalancer: TRACE
+        org.springframework.web.reactive.function.client: TRACE
+        reactor.netty.http.client: DEBUG
+        org.springframework.cloud.gateway.filter.LoadBalancerClientFilter: TRACE
+        org.springframework.cloud.gateway.handler.RoutePredicateHandlerMapping: TRACE
