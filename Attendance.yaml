@@ -27,6 +27,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
+      dialect: org.hibernate.dialect.MySQL8Dialect
       ddl-auto: none    # JPA 테이블 자동 생성
 aes:
   key: ${AES_KEY}
