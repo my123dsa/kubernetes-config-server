@@ -1,11 +1,5 @@
 server:
   port: 7070
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka
 spring:
   application:
     name: User
@@ -13,7 +7,7 @@ spring:
     config:
       enabled: false
   datasource:
-    url: jdbc:mysql://localhost:3306/member
+    url: jdbc:mysql://mysql:3306/member
     username: user
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -26,7 +20,7 @@ spring:
     show-sql: true
   data:
     redis:
-      host: localhost
+      host: redis
       port: 6379
 jwt:
   jwe:
