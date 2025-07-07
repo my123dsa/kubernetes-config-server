@@ -8,7 +8,7 @@ spring:
       enabled: false
   datasource:
     url: jdbc:mysql://mysql:3306/member
-    username: user
+    username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
