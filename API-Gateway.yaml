@@ -1,9 +1,8 @@
-server:
+    server:
       port: 8888
     spring:
       application:
         name: API-Gateway
-
       cloud:
         gateway:
           routes:
@@ -27,13 +26,11 @@ server:
                 - StripPrefix=1
         discovery:
           enabled: false
-
     jwt:
       jwe:
         key: ${JWE_KEY}
       jws:
         key: ${JWS_KEY}
-
     logging:
       level:
         org.springframework.cloud.gateway: TRACE
